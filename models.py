@@ -17,11 +17,11 @@ class Appearance(db.Model,SerializerMixin):
     __tablename__ = 'appearances'
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer, nullable=False)
-    episode_id = db.Column(db.Integer, db.ForeignKey('episodes.id'), nullable=False,cascade="all, delete-orphan")
-    guest_id = db.Column(db.Integer, db.ForeignKey('guests.id'), nullable=False,cascade="all, delete-orphan")
+    episode_id = db.Column(db.Integer, db.ForeignKey('episodes.id'), nullable=False)
+    guest_id = db.Column(db.Integer, db.ForeignKey('guests.id'), nullable=False)
 
-    #  relationships without a backref 
-    episode = db.relationship('Episode', backref=db.backref('appearances', lazy=True))
+    #  relationships with cascade defined in backref
+    episode = db.relationship('Episode', backref=db.backref('appearances', lazy=True, cascade="all, delete-orphan"))
     guest = db.relationship('Guest')  
 
     @validates('rating')

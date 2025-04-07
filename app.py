@@ -27,12 +27,12 @@ class EpisodeResource(Resource):
 
 
 
-class SingleEpisodeResource(Resource):
-    def get(self, episode_id):
-        episode = Episode.query.get(episode_id)
-        if not episode:
+class SingleEpisodeResource(Resource):# endpoint for getting a single episode
+    def get(self, episode_id):# get a single episode
+        episode = Episode.query.get(episode_id)# query the database for the episode
+        if not episode:#check if the episode exists
             return jsonify({"message": "Episode not found"}), 404
-        episode_data = {
+        episode_data = {# returning the episode data
             "id": episode.id,
             "date": episode.date,
             "number": episode.number,
@@ -72,7 +72,7 @@ class AppearanceResource(Resource): # endpoint for creating new appearances
         data = request.get_json() # get the json data from the request
         if not data:
             return {"error": "Missing JSON Data"}, 400
-        # Extracting data from the request
+        # Extracting data from the request/sending request to the db
         rating = data.get('rating')
         episode_id = data.get('episode_id')
         guest_id = data.get('guest_id')
